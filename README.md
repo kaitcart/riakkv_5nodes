@@ -7,6 +7,7 @@ vagrant, virtualbox and git.
 vagrant box add bento/centos-7.2
 git clone https://github.com/kesslerm/crdt_tutorial.git
 cd crdt_tutorial
+git submodule init && git submodule update
 vagrant up
 ```
 
