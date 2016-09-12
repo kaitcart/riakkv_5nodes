@@ -4,6 +4,7 @@ echo "Installing Packages..."
 sed -i -e 's/keepcache=0/keepcache=1/g' -e 's/gpgcheck=1/gpgcheck=0/g' /etc/yum.conf
 yum -q -y install epel-release
 yum -q -y install deltarpm
+yum -q -y install vim
 
 echo "Setting up hosts file"
 echo '
