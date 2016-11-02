@@ -9,12 +9,12 @@ yum -q -y install vim
 echo "Setting up hosts file"
 echo '
 # Added by Vagrant Provisioning Script
-10.10.10.10 client.riak.local client
-10.10.10.11 node1.riak.local node1
-10.10.10.12 node2.riak.local node2
-10.10.10.13 node3.riak.local node3
-10.10.10.14 node4.riak.local node4
-10.10.10.15 node5.riak.local node5
+10.10.10.16 clientkv.riak.local clientkv
+10.10.10.17 node1kv.riak.local node1kv
+10.10.10.18 node2kv.riak.local node2kv
+10.10.10.19 node3kv.riak.local node3kv
+10.10.10.20 node4kv.riak.local node4kv
+10.10.10.21 node5kv.riak.local node5kv
 ' >> /etc/hosts
 
 echo "Setting up SSH keys"

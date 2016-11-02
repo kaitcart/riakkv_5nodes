@@ -1,9 +1,9 @@
 #!/bin/env bash
 
 case $HOSTNAME in
-	(node2.riak.local)
-	(node3.riak.local)
-	(node4.riak.local)
-	(node5.riak.local) riak-admin cluster join node1.riak.local;;
+	(nodekv2.riak.local)
+	(nodekv3.riak.local)
+	(nodekv4.riak.local)
+	(nodekv5.riak.local) riak-admin cluster join nodekv1.riak.local;;
 	(*) ;;
 esac

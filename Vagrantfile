@@ -16,32 +16,32 @@ Vagrant.configure("2") do |config|
     owner: "root", group: "root"
   config.vm.synced_folder ".downloads", "/home/vagrant/Downloads"
   config.vm.synced_folder ".sources", "/home/vagrant/sources"
-  config.vm.synced_folder "labs", "/home/vagrant/labs"
+#  config.vm.synced_folder "labs", "/home/vagrant/labs"
   config.vm.synced_folder ".ssh", "/root/.ssh", owner: "root", group: "root"
 
   config.vm.provision "all", type: "shell", path: "provision/provision_all.sh"
   
   config.vm.define "client" do |client|
-    client.vm.hostname = "client.riak.local"
-    client.vm.network "private_network", ip: "10.10.10.10"
-    client.vm.provision "client", type: "shell", path: "provision/provision_client.sh"
+    client.vm.hostname = "clientkv.riak.local"
+    client.vm.network "private_network", ip: "10.10.10.16"
+ #   client.vm.provision "client", type: "shell", path: "provision/provision_client.sh"
   end
 
   (1..5).each do |index|
-    last_octet = 10 + index
+    last_octet = 16 + index
     
-    config.vm.define "node#{index}" do |node|
-      node.vm.hostname = "node#{index}.riak.local"
-      node.vm.network "private_network", ip: "10.10.10.#{last_octet}"
-      node.vm.provision "node#{index}", type: "shell", path: "provision/provision_node.sh"
+    config.vm.define "nodekv#{index}" do |nodekv|
+      nodekv.vm.hostname = "nodekv#{index}.riak.local"
+      nodekv.vm.network "private_network", ip: "10.10.10.#{last_octet}"
+      nodekv.vm.provision "nodekv#{index}", type: "shell", path: "provision/provision_node.sh"
     
       if index > 1
-        node.vm.provision "riak", type: "shell", inline: <<-CLUSTER_JOIN
-        riak-admin cluster join riak@node1.riak.local
+        nodekv.vm.provision "riak", type: "shell", inline: <<-CLUSTER_JOIN
+        riak-admin cluster join riak@nodekv1.riak.local
         CLUSTER_JOIN
       
         if index == 5
-          node.vm.provision "riak-plan-commit", type: "shell", inline: <<-CLUSTER_COMMIT
+          nodekv.vm.provision "riak-plan-commit", type: "shell", inline: <<-CLUSTER_COMMIT
           sleep 5
         
           riak-admin cluster plan

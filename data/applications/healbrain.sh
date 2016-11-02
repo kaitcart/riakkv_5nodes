@@ -1,19 +1,19 @@
 #! /usr/bin/env bash
 
 case $HOSTNAME in
-	node[1-2].riak.local)
-		iptables -D INPUT -s node3.riak.local -j REJECT
-		iptables -D OUTPUT -d node3.riak.local -j REJECT
-		iptables -D INPUT -s node4.riak.local -j REJECT
-		iptables -D OUTPUT -d node4.riak.local -j REJECT
-		iptables -D INPUT -s node5.riak.local -j REJECT
-		iptables -D OUTPUT -d node5.riak.local -j REJECT
+	nodekv[1-2].riak.local)
+		iptables -D INPUT -s nodekv3.riak.local -j REJECT
+		iptables -D OUTPUT -d nodekv3.riak.local -j REJECT
+		iptables -D INPUT -s nodekv4.riak.local -j REJECT
+		iptables -D OUTPUT -d nodekv4.riak.local -j REJECT
+		iptables -D INPUT -s nodekv5.riak.local -j REJECT
+		iptables -D OUTPUT -d nodekv5.riak.local -j REJECT
 		;;
-	node[3-5].riak.local)
-		iptables -D INPUT -s node1.riak.local -j REJECT
-		iptables -D OUTPUT -d node1.riak.local -j REJECT
-		iptables -D INPUT -s node2.riak.local -j REJECT
-		iptables -D OUTPUT -d node2.riak.local -j REJECT
+	nodekv[3-5].riak.local)
+		iptables -D INPUT -s nodekv1.riak.local -j REJECT
+		iptables -D OUTPUT -d nodekv1.riak.local -j REJECT
+		iptables -D INPUT -s nodekv2.riak.local -j REJECT
+		iptables -D OUTPUT -d nodekv2.riak.local -j REJECT
 		;;
 	*)
 		;;
