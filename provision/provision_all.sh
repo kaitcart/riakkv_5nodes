@@ -10,11 +10,11 @@ echo "Setting up hosts file"
 echo '
 # Added by Vagrant Provisioning Script
 10.10.10.16 clientkv.riak.local clientkv
-10.10.10.17 node1kv.riak.local node1kv
-10.10.10.18 node2kv.riak.local node2kv
-10.10.10.19 node3kv.riak.local node3kv
-10.10.10.20 node4kv.riak.local node4kv
-10.10.10.21 node5kv.riak.local node5kv
+10.10.10.17 nodekv1.riak.local nodekv1
+10.10.10.18 nodekv2.riak.local nodekv2
+10.10.10.19 nodekv3.riak.local nodekv3
+10.10.10.20 nodekv4.riak.local nodekv4
+10.10.10.21 nodekv5.riak.local nodekv5
 ' >> /etc/hosts
 
 echo "Setting up SSH keys"
@@ -39,7 +39,7 @@ if [ ! -f Downloads/erlang-solutions-1.0-1.noarch.rpm ]; then
 		-O Downloads/erlang-solutions-1.0-1.noarch.rpm
 fi
 
-yum -q -y install Downloads/erlang-solutions-1.0-1.noarch.rpm &> /dev/null
-yum -q -y install erlang
+#yum -q -y install Downloads/erlang-solutions-1.0-1.noarch.rpm &> /dev/null
+#yum -q -y install erlang
 
 echo "export ERL_LIBS=/home/vagrant/sources/riak-erlang-client:/home/vagrant/sources/riak-erlang-client/deps/hamcrest:/home/vagrant/sources/riak-erlang-client/deps/meck:/home/vagrant/sources/riak-erlang-client/deps/protobuffs:/home/vagrant/sources/riak-erlang-client/deps/riak_pb" >> /home/vagrant/.bashrc

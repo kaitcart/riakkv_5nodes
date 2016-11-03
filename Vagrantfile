@@ -16,17 +16,19 @@ Vagrant.configure("2") do |config|
     owner: "root", group: "root"
   config.vm.synced_folder ".downloads", "/home/vagrant/Downloads"
   config.vm.synced_folder ".sources", "/home/vagrant/sources"
-#  config.vm.synced_folder "labs", "/home/vagrant/labs"
   config.vm.synced_folder ".ssh", "/root/.ssh", owner: "root", group: "root"
 
+  # Runs the provision_all script on the node.
   config.vm.provision "all", type: "shell", path: "provision/provision_all.sh"
   
-  config.vm.define "client" do |client|
-    client.vm.hostname = "clientkv.riak.local"
-    client.vm.network "private_network", ip: "10.10.10.16"
- #   client.vm.provision "client", type: "shell", path: "provision/provision_client.sh"
+  # Configures the client node. Sets up the ipaddress and hostname, and runs the provision_client script
+  config.vm.define "clientkv" do |clientkv|
+    clientkv.vm.hostname = "clientkv.riak.local"
+    clientkv.vm.network "private_network", ip: "10.10.10.16"
+    clientkv.vm.provision "clientkv", type: "shell", path: "provision/provision_client.sh"
   end
 
+  # Configures the 5 Riak nodes. Assigns an ipaddress and hostname. Runs the provision_node script.
   (1..5).each do |index|
     last_octet = 16 + index
     
@@ -35,6 +37,7 @@ Vagrant.configure("2") do |config|
       nodekv.vm.network "private_network", ip: "10.10.10.#{last_octet}"
       nodekv.vm.provision "nodekv#{index}", type: "shell", path: "provision/provision_node.sh"
     
+   # Creates the 5 node cluster
       if index > 1
         nodekv.vm.provision "riak", type: "shell", inline: <<-CLUSTER_JOIN
         riak-admin cluster join riak@nodekv1.riak.local
@@ -47,6 +50,7 @@ Vagrant.configure("2") do |config|
           riak-admin cluster plan
           riak-admin cluster commit
           
+    # Creates several bucket types.
           sleep 5
           riak-admin bucket-type create standard
           riak-admin bucket-type activate standard
